@@ -17,7 +17,7 @@ Today I explored several core SQL concepts and commands that form the backbone o
 * Difference Between `WHERE` and `HAVING`
 * `DISTINCT`
 * `TOP` 
-* SQL Commands (DDL, DML, DCL, TCL)
+* SQL Commands (DDL, DML, DQL)
 * Database Structure
 * SQL Data Types
 
