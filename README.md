@@ -5,7 +5,7 @@ Today I explored several core SQL concepts and commands that form the backbone o
 
 ---
 
-## 📌 Topics Covered
+## Topics Covered
 
 * SQL Query Structure
 * `SELECT` Statement
@@ -129,7 +129,7 @@ ORDER BY order_date DESC;
 ```
 ---
 
-## ⚖️ WHERE vs HAVING
+## WHERE vs HAVING
 
 | `WHERE`                        | `HAVING`                      |
 | ------------------------------ | ----------------------------- |
@@ -157,7 +157,7 @@ ORDER BY order_date DESC;
 
 ---
 
-## 🏗️ Database Structure
+## Database Structure
 
 * **Database** → collection of data
 * **Tables** → store data in rows and columns
@@ -168,7 +168,7 @@ ORDER BY order_date DESC;
 
 ---
 
-## 📑 SQL Data Types
+## SQL Data Types
 
 Common categories:
 
