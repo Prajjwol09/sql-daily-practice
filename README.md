@@ -25,7 +25,7 @@ Today I explored several core SQL concepts and commands that form the backbone o
 
 ## 🧪 Practiced Queries (Day 1)
 
-Below are the refined SQL queries practiced today:
+Below are the SQL queries practiced today:
 
 ```sql
 -- Switch to the database
