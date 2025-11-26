@@ -139,7 +139,7 @@ ORDER BY order_date DESC;
 
 ---
 
-## ⚙️ SQL Commands
+## SQL Commands
 
 ### DDL – Data Definition Language
 
