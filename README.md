@@ -23,7 +23,7 @@ Today I explored several core SQL concepts and commands that form the backbone o
 
 ---
 
-## 🧪 Practiced Queries (Day 1)
+## Practiced Queries (Day 1)
 
 Below are the SQL queries practiced today:
 
