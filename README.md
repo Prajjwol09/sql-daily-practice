@@ -180,3 +180,253 @@ Common categories:
 ---
 
 This concludes Day 1! More coming tomorrow.
+
+--- 
+
+# Day 2 – SQL Execution Order, DDL/DML, INSERT, WHERE, LIKE, and JOINs
+
+Welcome to **Day 2** of my SQL Daily Practice!  
+Today I explored deeper SQL fundamentals including execution order, multi-query execution, creating/modifying tables, inserting data, copying data, filtering with operators, pattern matching with `LIKE`, and working with JOINs.
+
+---
+
+## Topics Covered
+
+* SQL Execution Order  
+* Multi-Query Execution  
+* Static Values in `SELECT`
+* DDL – `CREATE`, `ALTER`, `DROP`, `TRUNCATE`
+* DML – `INSERT`, `UPDATE`, `DELETE`
+* Insert Using `SELECT`
+* Difference Between `DROP`, `DELETE`, and `TRUNCATE`
+* `WHERE` Operator & Conditions  
+* `LIKE` Pattern Matching  
+* Reading Data From Multiple Tables  
+* No Join (separate queries)  
+* `INNER JOIN`  
+* `LEFT JOIN`
+
+---
+
+## Practiced Queries (Day 2)
+
+```sql
+-- Switch to the database
+USE MyDatabase;
+
+-- Retrieve all customer data
+SELECT * 
+FROM customers;
+
+-- Using static values in SELECT
+SELECT 
+    first_name,
+    score,
+    'Thapa' AS last_name
+FROM customers;
+
+-- Create a new table called persons
+CREATE TABLE persons (
+    id INT NOT NULL,
+    person_name VARCHAR(100) NOT NULL,
+    birth_date DATE,
+    phone VARCHAR(10) NOT NULL,
+    CONSTRAINT pk_persons PRIMARY KEY (id)
+);
+
+-- Add a new column named email
+ALTER TABLE persons
+ADD email VARCHAR(50) NOT NULL;
+
+-- Remove the column phone
+ALTER TABLE persons
+DROP COLUMN phone;
+
+-- Delete the table persons
+DROP TABLE persons;
+
+-- Insert data into customers
+INSERT INTO customers (id, first_name, country, score)
+VALUES 
+    (100, 'Prajjwol', 'Nepal', NULL),
+    (200, 'Niraj', NULL, 300);
+
+-- Copy data from customers into persons
+INSERT INTO persons (id, person_name, birth_date, phone)
+SELECT 
+    id,
+    first_name,
+    NULL,
+    'Not Known'
+FROM customers;
+
+-- Update score and id for customer with id 100
+UPDATE customers
+SET 
+    score = 0,
+    id = 6
+WHERE id = 100;
+
+-- Update customer 200
+UPDATE customers
+SET 
+    id = 0,
+    country = 'UK'
+WHERE id = 200;
+
+-- Update all customers with NULL score
+UPDATE customers
+SET score = 0
+WHERE score IS NULL;
+
+-- Delete customers with id greater than 5
+DELETE FROM customers
+WHERE id > 5;
+
+-- Truncate table
+TRUNCATE TABLE persons;
+
+-- Customers from Germany
+SELECT *
+FROM customers
+WHERE country = 'germany';
+
+-- Customers not from Germany
+SELECT *
+FROM customers
+WHERE country != 'germany';
+
+-- Score greater than 55
+SELECT *
+FROM customers
+WHERE score > 55;
+
+-- Score 100 or higher
+SELECT *
+FROM customers
+WHERE score >= 100;
+
+-- Customers from USA and score > 55
+SELECT *
+FROM customers
+WHERE country = 'USA' AND score > 55;
+
+-- USA or score > 55
+SELECT *
+FROM customers
+WHERE country = 'USA' OR score > 55;
+
+-- Not less than 100
+SELECT *
+FROM customers
+WHERE score >= 100;
+
+-- Using NOT
+SELECT *
+FROM customers
+WHERE NOT score < 100;
+
+-- Score between 50 and 100
+SELECT *
+FROM customers
+WHERE score BETWEEN 50 AND 100;
+
+-- From Germany or USA
+SELECT *
+FROM customers
+WHERE country IN ('germany', 'usa');
+
+-- First name starts with M
+SELECT *
+FROM customers
+WHERE first_name LIKE 'M%';
+
+-- First name ends with n
+SELECT *
+FROM customers
+WHERE first_name LIKE '%n';
+
+-- First name contains r
+SELECT *
+FROM customers
+WHERE first_name LIKE '%r%';
+
+-- 'r' in 3rd position
+SELECT *
+FROM customers
+WHERE first_name LIKE '__r%';
+
+-- No join – separate queries
+SELECT * FROM customers;
+SELECT * FROM orders;
+
+-- INNER JOIN (only customers with orders)
+SELECT 
+    c.id,
+    c.first_name,
+    o.order_id,
+    o.sales
+FROM customers AS c
+INNER JOIN orders AS o
+ON c.id = o.customer_id;
+
+-- LEFT JOIN (include customers without orders)
+SELECT 
+    c.id,
+    c.first_name,
+    o.order_id,
+    o.sales
+FROM customers AS c
+LEFT JOIN orders AS o
+ON c.id = o.customer_id;
+```
+
+---
+
+## WHERE Operator Highlights
+
+Used for row-level filtering:  
+* `=`  
+* `!=`, `<>`  
+* `>`, `<`, `>=`, `<=`  
+* `BETWEEN`  
+* `IN`  
+* `NOT`
+
+---
+
+## LIKE Pattern Matching
+
+| Pattern | Meaning | Example Match |
+|---------|---------|---------------|
+| `'M%'` | starts with M | Mark |
+| `'%n'` | ends with n | John |
+| `'%r%'` | contains r | Harry |
+| `'__r%'` | r in 3rd position | Aaron |
+
+---
+
+## SQL Commands
+
+### DDL – Data Definition Language
+
+* `CREATE`
+* `ALTER`
+* `DROP`
+* `TRUNCATE`
+
+### DML – Data Manipulation Language
+
+* `INSERT`
+* `UPDATE`
+* `DELETE`
+
+### DQL – Data Query Language
+
+* `SELECT`
+
+---
+
+This concludes **Day 2**! More practice coming tomorrow.
+
+---
