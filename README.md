@@ -430,3 +430,317 @@ Used for row-level filtering:
 This concludes **Day 2**! More practice coming tomorrow.
 
 ---
+
+# Day 3 – SQL Joins, Set Operations & Functions
+
+Welcome to **Day 3** of my SQL Daily Practice!  
+Today I explored different types of SQL joins, set operators, string functions, numeric functions, and date/time functions. This file summarizes everything covered along with all the queries I practiced.
+
+---
+
+## Topics Covered
+
+* `RIGHT JOIN`
+* `LEFT JOIN`
+* `FULL JOIN`
+* `CROSS JOIN`
+* Multi-table joins  
+* `UNION`, `UNION ALL`, `EXCEPT`, `INTERSECT`
+* String functions (`TRIM`, `CONCAT`, `REPLACE`, `LEFT`, `RIGHT`, `SUBSTRING`, `LEN`)
+* Numeric functions (`ROUND`, `ABS`)
+* Date & Time Functions  
+  * `GETDATE()`
+  * `DAY`, `MONTH`, `YEAR`
+  * `DATEPART`
+  * `DATENAME`
+  * `DATETRUNC`
+  * `EOMONTH`
+
+---
+
+## Practiced Queries (Day 3)
+
+```sql
+USE MyDatabase;
+
+-- get all customers along with their orders, including orders without matching customers
+select 
+	c.id,
+	c.first_name,
+	o.order_id
+from customers c
+right join orders o
+on c.id = o.customer_id;
+
+-- using left join for the same result
+select 
+	o.order_id,
+	c.first_name
+from orders o 
+left join customers c 
+on o.customer_id = c.id;
+
+-- get all customers and all orders, even if there is no match
+select *
+from customers c
+full join orders o
+on c.id = o.customer_id;
+
+-- get customers who have not placed any order
+select 
+	c.id,
+	c.first_name,
+	o.order_id
+from customers c
+left join orders o 
+on c.id = o.customer_id
+where o.customer_id is null;
+
+-- get all orders without matching customers
+select *
+from customers c
+right join orders o 
+on c.id = o.customer_id
+where c.id is null;
+
+-- same using left join
+select *
+from orders o
+left join customers c
+on o.customer_id = c.id
+where c.id is null;
+
+-- customers without orders AND orders without customers
+select 
+	c.id,
+	c.first_name,
+	o.customer_id,
+	o.order_id
+from customers c
+full join orders o
+on c.id = o.customer_id
+where c.id is null 
+or o.customer_id is null;
+
+-- customers with orders (without using inner join)
+select 
+	c.id,
+	o.customer_id,
+	c.first_name,
+	o.order_id
+from customers c
+left join orders o 
+on c.id = o.customer_id
+where o.order_id is not null;
+
+-- generate all possible combinations
+select *
+from customers
+cross join orders;
+
+-----------------------------------------------------------
+-- MULTI TABLE JOIN (SalesDB)
+-----------------------------------------------------------
+
+USE SalesDB;
+
+select 
+	o.OrderID,
+	o.Sales,
+	c.FirstName as Customer_FName,
+	c.LastName as Customer_LName,
+	p.Product as ProductName,
+	p.Price,
+	e.FirstName as Employee_FName,
+	e.LastName as Employee_LName
+from sales.orders as o 
+	left join sales.Customers as c
+	  on o.CustomerID = c.CustomerID
+	left join sales.Products as p 
+	  on o.ProductID = p.ProductID
+	left join sales.Employees as e
+	  on o.SalesPersonID = e.EmployeeID;
+
+-----------------------------------------------------------
+-- SET OPERATIONS
+-----------------------------------------------------------
+
+-- combine employees and customers (remove duplicates)
+select 
+	FirstName,
+	LastName
+from sales.Employees
+union 
+select 
+	FirstName,
+	LastName
+from sales.Customers;
+
+-- include duplicates (UNION ALL)
+select 
+	FirstName,
+	LastName
+from sales.Customers
+union all 
+select 
+	firstname,
+	lastname
+from sales.Employees;
+
+-- employees who are not customers
+select 
+	firstname,
+	lastname
+from sales.Employees
+except 
+select 
+	firstname,
+	lastname
+from sales.Customers;
+
+-- employees who are also customers
+select 
+	firstname, 
+	lastname 
+from sales.Employees
+intersect 
+select
+	firstname, 
+	lastname 
+from sales.Customers;
+
+-----------------------------------------------------------
+-- MERGING ORDERS + ORDERS ARCHIVE
+-----------------------------------------------------------
+
+select 
+'Order' as SourceTable,
+	[OrderID], [ProductID], [CustomerID], [SalesPersonID],
+	[OrderDate], [ShipDate], [OrderStatus], [ShipAddress],
+	[BillAddress], [Quantity], [Sales], [CreationTime]
+from sales.Orders
+union
+select 
+'OrderArchive' as SourceTable,
+	[OrderID], [ProductID], [CustomerID], [SalesPersonID],
+	[OrderDate], [ShipDate], [OrderStatus], [ShipAddress],
+	[BillAddress], [Quantity], [Sales], [CreationTime]
+from sales.OrdersArchive
+order by OrderID asc;
+
+-----------------------------------------------------------
+-- STRING FUNCTIONS
+-----------------------------------------------------------
+
+-- concatenation
+select 
+	CONCAT(FirstName,' ', country) as ConcatenatedColumn
+from sales.Customers;
+
+-- find names with leading/trailing spaces
+select 
+	first_name
+from customers
+where first_name != TRIM(first_name);
+
+-- replace '-' with '/'
+select 
+	order_date,
+	replace (order_date, '-', '/') as replaced_Date
+from orders;
+
+-- length of first name
+select 
+	first_name, 
+	len(first_name) as name_length
+from customers;
+
+-- extract first and last two characters
+select 
+	first_name,
+	left(trim(first_name), 2) as left_extract,
+	right(trim(first_name), 2) as right_extract
+from customers;
+
+-- remove first character
+select 
+	first_name,
+	substring(trim(first_name), 2, len(trim(first_name))) as extracted_name
+from customers;
+
+-----------------------------------------------------------
+-- NUMERIC FUNCTIONS
+-----------------------------------------------------------
+
+select 
+	9.912,
+	round(9.912, 2) as rounded_2,
+	round(9.912, 0) as rounded_0,
+	round(9.912, 1) as rounded_1;
+
+-- ABS
+select 
+	-100 as random_number,
+	abs(-100) as changed_column;
+
+-----------------------------------------------------------
+-- DATE & TIME FUNCTIONS
+-----------------------------------------------------------
+
+select 
+	orderid,
+	creationtime,
+	GETDATE() as today_Date
+from sales.orders;
+
+select 
+	creationtime,
+	day(creationtime) as day_number,
+	month(creationtime) as month_number,
+	year(creationtime) as year_number
+from sales.orders;
+
+select 
+	creationtime,
+	datepart(year, creationtime) as year,
+	datepart(week, creationtime) as week,
+	datepart(hour, creationtime) as hour,
+	datename(month, creationtime) as month_name,
+	datetrunc(month, creationtime) as month_truncated,
+	eomonth(creationtime) as eom
+from sales.orders;
+
+-----------------------------------------------------------
+-- AGGREGATIONS WITH DATES
+-----------------------------------------------------------
+
+-- orders per year
+select 
+	year(orderdate) as YearOfOrder,
+	count(*) as order_numbers
+from sales.orders
+group by year(orderdate);
+
+-- orders per month
+select 
+	datename(month, orderdate) as MonthOfOrder,
+	count(*) as order_numbers
+from sales.orders
+group by datename(month, orderdate)
+order by count(*) asc;
+
+-- orders placed in February
+select 
+	datename(month, orderdate) as month_name,
+	count(*) as order_number
+from sales.orders
+where datename(month, orderdate) = 'February'
+group by datename(month, orderdate);
+```
+
+---
+
+This concludes **Day 3** of my SQL journey!  
+More coming tomorrow.
+
+---
