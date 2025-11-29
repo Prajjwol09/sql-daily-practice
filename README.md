@@ -744,3 +744,146 @@ This concludes **Day 3** of my SQL journey!
 More coming tomorrow.
 
 ---
+
+# Day 4 – SQL Date, Time & Conversion Functions
+
+Welcome to **Day 4** of my SQL Daily Practice!  
+Today’s focus was on working with **dates**, **times**, **formatting**, **conversion**, **aggregations**, and **string operations**. This file serves as a structured summary of everything covered.
+
+---
+
+## Topics Covered
+
+* `FORMAT()` for custom date & time formatting  
+* `DATENAME()` and `DATEPART()`  
+* `CONVERT()` vs `CAST()`  
+* `DATEADD()` for date arithmetic  
+* `DATEDIFF()` for calculating differences  
+* Handling `NULL` values  
+* String concatenation  
+
+---
+
+## Practiced Queries (Day 4)
+
+```sql
+-- Formatting date and time
+SELECT 
+    creationtime,
+    FORMAT(creationtime, 'dd-MM-yyyy') AS formatted_date,
+    FORMAT(creationtime, 'ss:mm:hh') AS formatted_hours,
+    FORMAT(creationtime, 'dddd') AS day
+FROM sales.orders;
+
+-- Custom formatted output example
+SELECT 
+    creationtime,
+    'Day ' + FORMAT(creationtime, 'ddd MMM ') + 'Q' + DATENAME(quarter, creationtime) 
+    + FORMAT(creationtime, ' yyyy hh:mm:ss tt') AS formatted_date
+FROM sales.orders;
+
+-- Monthly aggregation using FORMAT()
+SELECT 
+    FORMAT(orderdate, 'MMM yy') AS dates,
+    COUNT(*) AS no_of_orders
+FROM sales.orders
+GROUP BY FORMAT(orderdate, 'MMM yy');
+
+-- Using CONVERT()
+SELECT 
+    creationtime,
+    CONVERT(date, creationtime) AS converted_Date
+FROM sales.orders;
+
+-- Using CAST()
+SELECT 
+    creationtime,
+    CAST(creationtime AS date) AS converted_to_date
+FROM sales.orders;
+
+-- Using DATEADD()
+SELECT 
+    orderdate,
+    DATEADD(year, 3, orderdate) AS afterThreeYears,
+    DATEADD(month, 8, orderdate) AS afterEightMonths
+FROM sales.orders;
+
+-- Calculate age from birthdate
+SELECT 
+    birthdate,
+    GETDATE() AS today_Date,
+    DATEDIFF(year, birthdate, GETDATE()) AS age_of_employees
+FROM sales.employees;
+
+-- Average shipping duration (in days) by month
+SELECT 
+    MONTH(orderdate) AS shipped_month,
+    AVG(DATEDIFF(day, orderdate, shipdate)) AS avg_shipping_duration
+FROM sales.orders
+GROUP BY MONTH(orderdate);
+
+-- Average score using COALESCE with window function
+SELECT 
+    score,
+    AVG(COALESCE(score, 0)) OVER() AS avg_score
+FROM sales.customers;
+
+-- Combine first and last name + add bonus points
+SELECT 
+    firstname,
+    lastname,
+    firstname + ' ' + COALESCE(lastname, 'Thapa') AS fullname,
+    score,
+    COALESCE(score, 0) + 10 AS bonus_score
+FROM sales.customers;
+
+-- Sort scores (NULL values last)
+SELECT 
+    COALESCE(score, 1000000) AS scores_sorted
+FROM sales.customers
+ORDER BY COALESCE(score, 1000000) ASC;
+
+-- Sales price per order
+SELECT 
+    sales,
+    quantity,
+    sales / NULLIF(quantity, 0) AS sales_price
+FROM sales.OrdersArchive;
+
+-- Customers with no scores
+SELECT 
+    customerid,
+    firstname,
+    score
+FROM sales.customers
+WHERE score IS NULL;
+
+-- Customers with scores
+SELECT 
+    customerid,
+    firstname,
+    lastname,
+    score
+FROM sales.customers
+WHERE score IS NOT NULL;
+
+-- Customers who have NOT placed any orders
+SELECT 
+    c.CustomerID,
+    c.FirstName,
+    c.LastName,
+    c.Country,
+    c.score,
+    o.CustomerID,
+    o.OrderID
+FROM sales.customers AS c
+LEFT JOIN sales.orders AS o
+    ON c.CustomerID = o.CustomerID
+WHERE o.CustomerID IS NULL;
+```
+
+---
+
+That wraps up **Day 4**! More to come as the consistency continues.
+
+---
