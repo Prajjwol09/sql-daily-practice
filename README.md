@@ -887,3 +887,182 @@ WHERE o.CustomerID IS NULL;
 That wraps up **Day 4**! More to come as the consistency continues.
 
 ---
+
+# Day 5 – SQL CASE, Aggregations & Window Functions
+
+Welcome to **Day 5** of my SQL Daily Practice!  
+This session focused on conditional logic using `CASE`, aggregation techniques, analytical window functions, ranking, and frame clauses. Here’s a structured summary of everything covered today.
+
+---
+
+## Topics Covered
+
+* Conditional logic with `CASE`
+* Categorizing data using custom conditions
+* Aggregations: `SUM()`, `COUNT()`, `AVG()`, `MAX()`, `MIN()`
+* Handling conditional counts inside aggregates
+* Window functions with `OVER()`
+* Partitioning window functions by columns
+* Ranking rows with `RANK()`
+* Frame clauses for sliding-window calculations
+* Basic statistics on tables (totals, averages, counts)
+
+---
+
+## Practiced Queries (Day 5)
+
+```sql
+/* Report showing total sales for each category
+   high: sales > 50
+   medium: 20 < sales <= 50
+   low: sales <= 20
+   Sorted from lowest to highest
+*/
+SELECT
+    category,
+    SUM(Sales) AS total_Sales
+FROM (
+    SELECT 
+        orderid,
+        sales,
+        CASE
+            WHEN sales > 50 THEN 'high'
+            WHEN sales > 20 THEN 'medium'
+            ELSE 'low'
+        END AS category 
+    FROM sales.orders
+) AS sub_query
+GROUP BY category
+ORDER BY total_Sales;
+
+/* Display employee gender as full text */
+SELECT 
+    gender,
+    CASE 
+        WHEN gender = 'M' THEN 'Male'
+        WHEN gender = 'F' THEN 'Female'
+    END AS FullText_Gender
+FROM sales.Employees;
+
+/* Customer details with abbreviated country code */
+SELECT 
+    CustomerID,
+    FirstName,
+    Country,
+    CASE 
+        WHEN country = 'Germany' THEN 'DE'
+        WHEN country = 'USA' THEN 'US'
+    END AS country_code
+FROM sales.Customers;
+
+/* Short form CASE syntax (works only for equality checks) */
+SELECT 
+    CustomerID,
+    FirstName,
+    Country,
+    CASE country
+        WHEN 'Germany' THEN 'DE'
+        WHEN 'USA' THEN 'US'
+    END AS country_code
+FROM sales.Customers;
+
+/* Count how many orders each customer made with sales above 30 */
+SELECT 
+    customerid,
+    SUM(
+        CASE 
+            WHEN sales > 30 THEN 1
+            ELSE 0
+        END
+    ) AS higher_orders,
+    COUNT(*) AS total_orders
+FROM sales.orders
+GROUP BY CustomerID;
+
+/* Total number of customers */
+SELECT 
+    COUNT(CustomerID) AS total_customers 
+FROM sales.Customers;
+
+/* Total sales across all orders */
+SELECT 
+    SUM(Sales) AS total_sales
+FROM sales.Orders;
+
+/* Average sales across all orders */
+SELECT 
+    AVG(sales) AS average_Sales
+FROM sales.orders;
+
+/* Analyze scores in customers table */
+SELECT 
+    COUNT(customerid) AS no_of_customer,
+    AVG(ISNULL(Score,0)) AS average_score,
+    SUM(ISNULL(Score,0)) AS total_Score,
+    MAX(score) AS max_score,
+    MIN(score) AS min_Score
+FROM sales.customers;
+
+/* Total sales across all orders */
+SELECT 
+    SUM(Sales) AS total_Sales
+FROM sales.orders;
+
+/* Total sales for each product */
+SELECT 
+    productid,
+    SUM(sales) AS total_sales
+FROM sales.orders
+GROUP BY productid;
+
+/* Total sales for each product with row-level details */
+SELECT 
+    productid,
+    orderid,
+    orderdate,
+    SUM(sales) OVER(PARTITION BY productid) AS total_sales
+FROM sales.orders;
+
+/* Total sales overall with full row details */
+SELECT 
+    orderid,
+    orderdate,
+    SUM(sales) OVER() AS total_Sales
+FROM sales.orders;
+
+/* Total sales for each product + order status combination */
+SELECT
+    productid,
+    orderstatus,
+    sales,
+    SUM(sales) OVER (PARTITION BY productid, orderstatus) AS combo 
+FROM sales.orders;
+
+/* Rank orders based on sales (highest to lowest) */
+SELECT 
+    orderid,
+    orderdate,
+    sales,
+    RANK() OVER (ORDER BY sales DESC) AS ranks_basedon_sales
+FROM sales.orders;
+
+/* Frame clause: sliding window sum for each order status */
+SELECT 
+    orderid,
+    orderdate,
+    orderstatus,
+    sales,
+    SUM(sales) OVER(
+        PARTITION BY orderstatus 
+        ORDER BY orderdate 
+        ROWS BETWEEN CURRENT ROW AND 2 FOLLOWING
+    ) AS frame
+FROM sales.orders;
+```
+
+---
+
+That wraps up **Day 5**! The journey continues—on to the next milestone.
+
+---
+
