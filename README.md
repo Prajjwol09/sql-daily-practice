@@ -1062,7 +1062,7 @@ FROM sales.orders;
 
 ---
 
-That wraps up **Day 5**! The journey continues—on to the next milestone.
+That wraps up **Day 5**! The journey continues on to the next milestone.
 
 ---
 
