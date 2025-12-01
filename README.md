@@ -224,7 +224,7 @@ That wraps up **Day 4**! More to come as the consistency continues.
 # Day 5 – SQL CASE, Aggregations & Window Functions
 
 Welcome to **Day 5** of my SQL Daily Practice!  
-This session focused on conditional logic using `CASE`, aggregation techniques, analytical window functions, ranking, and frame clauses. Here’s a structured summary of everything covered today.
+This session focused on conditional logic using `CASE`, aggregation techniques, analytical window functions, ranking, and frame clauses.
 
 ---
 
@@ -253,7 +253,7 @@ That wraps up **Day 5**! The journey continues on to the next milestone.
 # Day 6 – SQL Window Functions, Ranking, Aggregations & Duplicate Handling
 
 Welcome to Day 6 of my SQL Daily Practice!  
-This session focused on window functions for analysis, ranking techniques, rolling calculations, duplicate detection, and advanced aggregation methods. Here’s a structured summary of everything covered today.
+This session focused on window functions for analysis, ranking techniques, rolling calculations, duplicate detection, and advanced aggregation methods. 
 
 ---
 
