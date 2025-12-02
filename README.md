@@ -279,4 +279,34 @@ That wraps up Day 6! The journey continues on to the next milestone.
 
 ---
 
+# Day 7 – Advanced SQL Analytics, Ranking Logic & Time-Based Insights
+
+Welcome to **Day 7** of my SQL Daily Practice!  
+Today’s session focused on advanced analytical functions, percentile-based segmentation, customer-behavior analysis, and time-series percentage changes. 
+
+---
+
+## Topics Covered
+
+* Dividing sales into 3 groups using NTILE(3)
+* Creating High / Medium / Low sales categories
+* Identifying products within the top 40% of prices using PERCENT_RANK()
+* Calculating month-over-month total sales
+* Computing percentage change between current month and previous month
+* Measuring days between consecutive orders for each customer
+* Ranking customers based on their average ordering interval
+* Using LEAD() to access the next order date
+* Finding lowest and highest sales for each product using FIRST_VALUE() and LAST_VALUE()
+* Calculating the difference between current sales and lowest sales for each product
+
+---
+
+## The Practiced Queries for Day - 7 is listed in the files above.
+
+---
+
+That wraps up **Day 7**! On to the next chapter of SQL mastery.
+
+---
+
 
