@@ -309,4 +309,33 @@ That wraps up **Day 7**! On to the next chapter of SQL mastery.
 
 ---
 
+# Day 8 – SQL Subqueries, CTEs & Customer-Level Analytics
 
+Welcome to **Day 8** of my SQL Daily Practice!  
+Today’s learning revolved around subqueries, standalone CTEs, multi-CTE pipelines, and combining analytical outputs to build complete customer insights.
+
+---
+
+## Topics Covered
+
+* Using subqueries inside `FROM` and `WHERE` clauses  
+* Filtering results using subqueries with window functions  
+* Understanding and writing standalone CTEs  
+* Working with multiple standalone CTEs in one query  
+* Building nested CTE structures for multi-step transformations  
+* Using subqueries to count total orders  
+* Creating multi-CTE pipelines for:  
+  - total sales per customer  
+  - last order date  
+  - ranking customers by total sales  
+  - segmenting customers into High / Medium / Low groups  
+
+---
+
+## The Practiced Queries for Day - 8 is listed in the files above.
+
+---
+
+That wraps up **Day 8**! More SQL building blocks mastered — on to the next one.
+
+---
