@@ -339,3 +339,32 @@ Today’s learning revolved around subqueries, standalone CTEs, multi-CTE pipeli
 That wraps up **Day 8**! More SQL building blocks mastered — on to the next one.
 
 ---
+
+# Day 9 – Recursive CTEs, Views & Organizational Hierarchies
+
+Welcome to **Day 9** of my SQL Daily Practice!  
+Today’s work concentrated on recursive logic, hierarchical data traversal, building reusable views, and performing running totals using aggregated monthly data.
+
+---
+
+## Topics Covered
+
+* Generating number sequences using recursive CTEs  
+* Understanding anchor queries vs recursive queries  
+* Building multi-level hierarchical structures (Employee → Manager chains)  
+* Creating views to simplify complex joins  
+* Using views to compute monthly totals  
+* Combining multiple tables (orders, products, customers, employees) into a unified view  
+* Filtering views for region-based access (example: excluding USA data)  
+* Dropping and recreating views for version updates  
+
+---
+
+## The Practiced Queries for Day - 9 is listed in the files above.
+
+---
+
+That wraps up **Day 9**! Another solid step forward in SQL mastery — recursive logic and reusable structures unlocked.
+
+---
+
