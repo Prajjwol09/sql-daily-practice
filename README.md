@@ -368,3 +368,33 @@ That wraps up **Day 9**! Another solid step forward in SQL mastery — recursive
 
 ---
 
+# Day 10 – CTAS, Temporary Tables, Stored Procedures, Error Handling & Data Cleaning
+
+Welcome to **Day 10** of my SQL Daily Practice!  
+Today’s focus was on creating tables from queries, working with temporary tables, and building stored procedures with full error-handling logic.
+
+---
+
+## Topics Covered
+
+* Creating new tables using **CTAS (Create Table As Select)**  
+* Dropping permanent tables safely  
+* Creating and querying **temporary tables (#temp)**  
+* Migrating temp table data into permanent tables  
+* Using **COALESCE** to safely handle NULL values  
+* Converting analytical queries into **stored procedures**  
+* Using **parameters** inside stored procedures  
+* Using **variables** to store intermediate values  
+* Implementing **control flow statements (IF…ELSE)**  
+* Printing output messages from stored procedures    
+* Triggering deliberate errors to test **TRY…CATCH** blocks  
+---
+
+## The Practiced Queries for Day - 10 is listed in the files above.
+
+---
+
+That wraps up **Day 10**!  
+Today was a major step: from basic queries to full-scale stored procedures with automated error detection and reporting.
+
+---
