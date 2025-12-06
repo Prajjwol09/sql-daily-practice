@@ -398,3 +398,47 @@ That wraps up **Day 10**!
 Today was a major step: from basic queries to full-scale stored procedures with automated error detection and reporting.
 
 ---
+
+# Day 11 – Triggers, Indexing, Columnstore, and Index Monitoring
+
+Today's session focused heavily on automation and optimization.  
+I worked on creating triggers, building multiple types of indexes, monitoring index usage, and experimenting with filter and composite indexes.
+
+---
+
+## Topics Covered
+
+### **Trigger Fundamentals**
+* Creating log tables for auditing changes  
+* Using the `inserted` pseudo-table inside triggers  
+* Automating log creation when new employees are added  
+* Understanding `AFTER INSERT` triggers  
+
+### 🔹 **Index Basics**
+* What indexes are and why they improve performance  
+* Clustered vs Non-Clustered Indexes  
+
+### 🔹 **Creating Different Types of Indexes**
+* Creating a **clustered index** on a key column  
+* Dropping existing indexes safely  
+* Creating **non-clustered indexes** on frequently searched attributes  
+* Building a **composite index** (multi-column index)  
+* Creating a **unique index** to enforce data integrity  
+* Applying **filtered indexes** for selective workloads  
+* Implementing a **clustered columnstore index** for analytical workloads  
+
+### 🔹 **Index Metadata & Monitoring**
+* Listing all indexes on a table using `sp_helpindex`  
+* Exploring **sys.indexes** and **sys.tables** for metadata  
+* Checking index usage with `sys.dm_db_index_usage_stats`  
+* Reading missing index suggestions from `sys.dm_db_missing_index_details`  
+
+---
+
+## The Practiced Queries for Day - 11 are available in the code section above.
+
+---
+
+This concludes **Day 11**, where the focus shifted to automation (triggers) and performance tuning (indexing).  
+
+---
