@@ -442,3 +442,58 @@ I worked on creating triggers, building multiple types of indexes, monitoring in
 This concludes **Day 11**, where the focus shifted to automation (triggers) and performance tuning (indexing).  
 
 ---
+
+# Day 12 – Table Partitioning, Filegroups, Partition Schemes & Metadata Analysis
+
+Today’s session was all about **database partitioning** — a powerful technique used for performance optimization, scalability, and efficient data management in large systems.  
+I practiced creating partition functions, partition schemes, filegroups, metadata queries, and a full partitioned table.
+
+---
+
+## Topics Covered
+
+### 🔹 **Partition Function**
+* Uses `RANGE LEFT` with date boundaries  
+* Verified using `sys.partition_functions`
+
+---
+
+### 🔹 **Filegroups**
+* Logical container for database files  
+* Used to distribute partitions across different storage  
+* Created multiple filegroups: `fg_2023`, `fg_2024`, `fg_2025`, `fg_2026`  
+* Learned how to **add** and **remove** filegroups  
+* Viewed existing filegroups from `sys.filegroups`
+
+---
+
+### 🔹 **Adding Data Files (.ndf)**
+* Added one data file per filegroup  
+* Learned the difference between:
+  - **Logical name**  
+  - **Physical path**  
+  - **Filegroup allocation**  
+* Verified metadata using `sys.master_files` + `sys.filegroups` join
+
+---
+
+### 🔹 **Partition Scheme**
+* Maps a partition function to filegroups  
+* Created `scheme_by_year` that distributes partitions across four filegroups  
+* Verified partition scheme structure using:
+  - `sys.partition_schemes`  
+  - `sys.partition_functions`  
+  - `sys.destination_data_spaces`  
+  - `sys.filegroups`
+    
+---
+
+### 🔹 **Partitioned Table**
+* Created a table on the partition scheme using the partitioning column (`orderdate`)  
+* Inserted multiple rows to test partition distribution
+  
+---
+
+## This wraps up **Day 12**, focused entirely on mastering SQL Server table partitioning—a key skill for handling large-scale datasets efficiently.
+
+---
